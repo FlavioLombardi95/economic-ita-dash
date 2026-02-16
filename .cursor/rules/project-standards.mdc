@@ -1,0 +1,19 @@
+---
+description: Standard di progetto per Italy Economic Dash
+alwaysApply: true
+---
+
+# Project Standards
+
+- Use Next.js 14 App Router
+- TypeScript strict mode mandatory
+- No client-side API fetching
+- All data must come from local JSON files
+- Keep components modular
+- Avoid large components (>150 lines)
+- Use Tailwind only for styling
+- Use Recharts for charts
+- Highlight years 2008, 2012, 2020, 2022
+- Prioritize readability over animations
+- Write clean and professional code
+- No any types allowed

@@ -3,6 +3,7 @@ import { LineChart } from './LineChart';
 import type { DataPoint } from '@/lib/types';
 
 interface ChartSectionProps {
+  id?: string;
   title: string;
   description: React.ReactNode;
   data: DataPoint[];
@@ -15,6 +16,7 @@ interface ChartSectionProps {
 }
 
 export function ChartSection({
+  id,
   title,
   description,
   data,
@@ -24,11 +26,11 @@ export function ChartSection({
   indexBaseYear,
 }: ChartSectionProps): JSX.Element {
   return (
-    <section className="space-y-6 py-10 md:py-14">
+    <section id={id} className="scroll-mt-28 space-y-6 py-12 md:py-16">
       <NarrativeBlock title={title} takeaway={takeaway}>
         {description}
       </NarrativeBlock>
-      <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 p-4 md:p-6">
+      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800/50 dark:shadow-none md:p-6">
         <LineChart
           data={data}
           unit={unit}

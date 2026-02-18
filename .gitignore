@@ -17,6 +17,9 @@ yarn-error.log*
 .env.local
 .env.*.local
 
+# Token Git (non committare)
+.github-token
+
 # IDE
 .idea
 .vscode

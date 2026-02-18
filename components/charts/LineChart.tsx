@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import {
   LineChart as RechartsLineChart,
   Line,
@@ -38,6 +39,8 @@ function computeYDomain(values: number[], paddingRatio = 0.08): [number, number]
   return [minVal - padding, maxVal + padding];
 }
 
+const CHART_HEIGHT = 320;
+
 export function LineChart({
   data,
   dataKey = 'value',
@@ -45,15 +48,28 @@ export function LineChart({
   unit = '',
   indexBaseYear,
 }: LineChartProps): JSX.Element {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const chartData = data.map((d) => ({ ...d, [dataKey]: d.value }));
   const isIndex = indexBaseYear != null;
   const values = data.map((d) => d.value);
   const yDomain = computeYDomain(values);
 
+  if (!mounted) {
+    return (
+      <div className="w-full" style={{ minHeight: CHART_HEIGHT }}>
+        <div className="flex h-[320px] items-center justify-center rounded-lg bg-slate-100 text-sm text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+          Caricamento grafico…
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full">
-      <div className="h-[320px]">
-        <ResponsiveContainer width="100%" height="100%">
+    <div className="w-full min-w-0">
+      <div className="h-[320px] w-full" style={{ minHeight: CHART_HEIGHT }}>
+        <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
           <RechartsLineChart
             data={chartData}
             margin={{ top: 16, right: 16, left: 8, bottom: 8 }}

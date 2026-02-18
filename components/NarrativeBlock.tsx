@@ -20,11 +20,11 @@ export function NarrativeBlock({
       </p>
       {takeaway && (
         <div
-          className="max-w-3xl rounded-lg border-l-4 border-slate-400 bg-slate-50 dark:bg-slate-800/50 dark:border-slate-500 px-4 py-3"
+          className="max-w-3xl rounded-xl border-l-4 border-accent bg-blue-50/80 px-4 py-3 dark:bg-blue-950/30 dark:border-accent-light"
           role="complementary"
           aria-label="In sintesi"
         >
-          <p className="text-slate-800 dark:text-slate-200 font-medium leading-snug">
+          <p className="font-medium leading-snug text-slate-800 dark:text-slate-100">
             {takeaway}
           </p>
         </div>

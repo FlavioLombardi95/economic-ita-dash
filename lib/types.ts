@@ -19,11 +19,13 @@ export type DatasetKey =
   | 'poverty';
 
 /**
- * Metadata for each indicator (title, description, unit).
+ * Metadata for each indicator (title, description, unit, takeaway).
  */
 export interface IndicatorMeta {
   id: DatasetKey;
   title: string;
   description: string;
+  /** Frase in linguaggio semplice: "In pratica..." per chi non mastica numeri */
+  takeaway?: string;
   unit?: string;
 }

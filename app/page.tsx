@@ -18,13 +18,17 @@ const DATASETS: Record<string, DataPoint[]> = {
 };
 
 const UNITS: Record<string, string> = {
-  income: ' (2000=100)',
-  wages: ' (2000=100)',
+  income: '',
+  wages: '',
   inflation: '%',
   employment: '%',
-  consumption: ' (2000=100)',
+  consumption: '',
   poverty: '%',
 };
+
+/** Indicatori espressi come indice (anno base 2000): mostrano legenda "100 = livello 2000" */
+const INDEX_BASE_YEAR = 2000;
+const INDEX_INDICATORS: Set<string> = new Set(['income', 'wages', 'consumption']);
 
 export default function HomePage(): JSX.Element {
   return (
@@ -36,9 +40,9 @@ export default function HomePage(): JSX.Element {
             Com&apos;è cambiata la vita economica di un italiano dal 2000?
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400">
-            Una lettura per indicatori: reddito, salari, inflazione, occupazione,
-            consumi e rischio di povertà. Gli anni 2008, 2012, 2020 e 2022 sono
-            evidenziati come riferimenti alle crisi recenti.
+            Sei grafici con dati ufficiali (ISTAT, Eurostat) per capire redditi, stipendi,
+            carovita, lavoro, spese e povertà. Le linee tratteggiate segnano le crisi:
+            2008, 2012, 2020, 2022.
           </p>
         </header>
 
@@ -48,24 +52,23 @@ export default function HomePage(): JSX.Element {
             key={ind.id}
             title={ind.title}
             description={ind.description}
+            takeaway={ind.takeaway}
             data={DATASETS[ind.id] ?? []}
             unit={UNITS[ind.id]}
+            indexBaseYear={INDEX_INDICATORS.has(ind.id) ? INDEX_BASE_YEAR : undefined}
           />
         ))}
 
         {/* Footer */}
         <footer className="mt-20 border-t border-slate-200 dark:border-slate-800 pt-10 pb-8">
           <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Fonti e metodologia
+            Da dove vengono questi dati?
           </h3>
           <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
-            Dati: <strong>ISTAT</strong>, <strong>Eurostat</strong>. Le serie
-            sono state estratte tramite script da fonti ufficiali, normalizzate
-            in formato anno-valore e versionate nel repository. Nessuna elaborazione
-            statistica oltre alla presentazione grafica. Per aggiornare i dati:
-            <code className="mx-1 rounded bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 text-xs">
-              npm run update-data
-            </code>
+            Tutti i numeri vengono da <strong>ISTAT</strong> e <strong>Eurostat</strong>:
+            sono le statistiche ufficiali dello Stato e dell’Unione europea. Nessuna
+            elaborazione: qui trovi i dati così come sono, solo messi in grafici per
+            leggerli meglio.
           </p>
         </footer>
       </main>

@@ -1,26 +1,94 @@
 [
-  {"year": 2000, "value": 18.2},
-  {"year": 2001, "value": 18.5},
-  {"year": 2002, "value": 18.8},
-  {"year": 2003, "value": 19.1},
-  {"year": 2004, "value": 19.0},
-  {"year": 2005, "value": 19.6},
-  {"year": 2006, "value": 19.9},
-  {"year": 2007, "value": 19.9},
-  {"year": 2008, "value": 19.6},
-  {"year": 2009, "value": 18.4},
-  {"year": 2010, "value": 18.2},
-  {"year": 2011, "value": 19.6},
-  {"year": 2012, "value": 24.5},
-  {"year": 2013, "value": 28.4},
-  {"year": 2014, "value": 28.3},
-  {"year": 2015, "value": 28.7},
-  {"year": 2016, "value": 28.9},
-  {"year": 2017, "value": 28.9},
-  {"year": 2018, "value": 27.3},
-  {"year": 2019, "value": 25.6},
-  {"year": 2020, "value": 25.3},
-  {"year": 2021, "value": 25.2},
-  {"year": 2022, "value": 24.3},
-  {"year": 2023, "value": 23.2}
+  {
+    "year": 2000,
+    "value": 7
+  },
+  {
+    "year": 2001,
+    "value": 18
+  },
+  {
+    "year": 2004,
+    "value": 6.7
+  },
+  {
+    "year": 2005,
+    "value": 6.6
+  },
+  {
+    "year": 2006,
+    "value": 6.6
+  },
+  {
+    "year": 2007,
+    "value": 6.4
+  },
+  {
+    "year": 2008,
+    "value": 6.4
+  },
+  {
+    "year": 2009,
+    "value": 6.4
+  },
+  {
+    "year": 2010,
+    "value": 6.6
+  },
+  {
+    "year": 2011,
+    "value": 7.7
+  },
+  {
+    "year": 2012,
+    "value": 7.1
+  },
+  {
+    "year": 2013,
+    "value": 7.7
+  },
+  {
+    "year": 2014,
+    "value": 8
+  },
+  {
+    "year": 2015,
+    "value": 8.2
+  },
+  {
+    "year": 2016,
+    "value": 9.3
+  },
+  {
+    "year": 2017,
+    "value": 8.5
+  },
+  {
+    "year": 2018,
+    "value": 8.8
+  },
+  {
+    "year": 2019,
+    "value": 8.6
+  },
+  {
+    "year": 2020,
+    "value": 8.3
+  },
+  {
+    "year": 2021,
+    "value": 8.3
+  },
+  {
+    "year": 2022,
+    "value": 7.6
+  },
+  {
+    "year": 2023,
+    "value": 6.8
+  },
+  {
+    "year": 2024,
+    "value": 7.5
+  }
 ]

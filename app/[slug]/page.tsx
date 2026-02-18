@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChartSection } from '@/components/charts/ChartSection';
+import { InflationWagesComparisonChart } from '@/components/charts/InflationWagesComparisonChart';
+import { NarrativeBlock } from '@/components/NarrativeBlock';
 import { Sidebar } from '@/components/Sidebar';
 import { ThemeMobileNav } from '@/components/ThemeMobileNav';
 import { getIndicatorById } from '@/lib/indicators';
@@ -64,12 +66,10 @@ export default function ThemePage({
   const baselineValue =
     chartVariant === 'index'
       ? 100
-      : chartVariant === 'inflation'
-        ? 0
-        : (() => {
-            const point = data.find((d) => d.year === 2000);
-            return point?.value;
-          })();
+      : (() => {
+          const point = data.find((d) => d.year === 2000);
+          return point?.value;
+        })();
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950">
@@ -100,6 +100,26 @@ export default function ThemePage({
               chartVariant={chartVariant}
               baselineValue={baselineValue}
             />
+
+            {theme.id === 'wages' && (
+              <section className="scroll-mt-28 space-y-6 py-10 md:py-14">
+                <NarrativeBlock
+                  title="Inflazione e salari: quando il potere d'acquisto si erode"
+                  takeaway="Se i prezzi salgono più degli stipendi, con lo stesso stipendio compri meno: in media il cittadino diventa più povero."
+                >
+                  Il grafico confronta, anno su anno, di quanto sono aumentati i prezzi (linea
+                  blu) e di quanto sono cresciuti i salari reali (linea verde). Quando la linea
+                  blu sta sopra alla verde, i prezzi corrono più degli stipendi: il potere
+                  d&apos;acquisto cala.
+                </NarrativeBlock>
+                <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800/50 dark:shadow-none md:p-6">
+                  <InflationWagesComparisonChart
+                    inflationData={DATASETS.inflation}
+                    wagesData={DATASETS.wages}
+                  />
+                </div>
+              </section>
+            )}
 
             <footer className="mt-16 rounded-xl border border-slate-200 bg-slate-50 px-5 py-6 dark:border-slate-800 dark:bg-slate-900/50 sm:px-6 sm:py-8">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">

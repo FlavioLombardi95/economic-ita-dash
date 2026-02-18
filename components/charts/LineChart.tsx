@@ -72,7 +72,7 @@ const Y_AXIS_CONFIG: Record<
   inflation: {
     label: 'Variazione % prezzi (anno su anno)',
     tickFormatter: (v) => `${Math.round(v)}%`,
-    helpText: 'Quanto sono aumentati i prezzi in un anno rispetto all’anno prima. 0% = prezzi stabili.',
+    helpText: 'Quanto sono aumentati i prezzi in un anno rispetto all’anno prima. La linea tratteggiata è il livello del 2000. Sopra = inflazione più alta di quell\u0027anno, sotto = più bassa.',
   },
 };
 
@@ -146,7 +146,7 @@ export function LineChart({
                 strokeDasharray="4 4"
                 strokeWidth={1.5}
                 label={{
-                  value: variant === 'index' ? `Anno ${indexBaseYear ?? 2000}` : 'Riferimento',
+                  value: `Anno ${indexBaseYear ?? 2000}`,
                   position: 'right',
                   fill: '#64748b',
                   fontSize: 10,

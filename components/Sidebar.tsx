@@ -1,15 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-const NAV_ITEMS: { id: string; label: string; icon: React.ReactNode }[] = [
-  { id: 'income', label: 'Reddito', icon: <ChartLineIcon /> },
-  { id: 'wages', label: 'Salari', icon: <WalletIcon /> },
-  { id: 'inflation', label: 'Inflazione', icon: <TrendIcon /> },
-  { id: 'employment', label: 'Lavoro', icon: <BriefcaseIcon /> },
-  { id: 'consumption', label: 'Consumi', icon: <CartIcon /> },
-  { id: 'poverty', label: 'Povertà', icon: <PeopleIcon /> },
-];
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { THEMES } from '@/lib/themes';
 
 function ChartLineIcon(): JSX.Element {
   return (
@@ -59,52 +52,65 @@ function PeopleIcon(): JSX.Element {
   );
 }
 
-export function Sidebar(): JSX.Element {
-  const [activeId, setActiveId] = useState<string>('');
+const ICONS: Record<string, React.ReactNode> = {
+  reddito: <ChartLineIcon />,
+  salari: <WalletIcon />,
+  inflazione: <TrendIcon />,
+  lavoro: <BriefcaseIcon />,
+  consumi: <CartIcon />,
+  poverta: <PeopleIcon />,
+};
 
-  useEffect(() => {
-    const readHash = (): void => {
-      const hash = typeof window !== 'undefined' ? window.location.hash.slice(1) : '';
-      setActiveId(hash || '');
-    };
-    readHash();
-    window.addEventListener('hashchange', readHash);
-    return () => window.removeEventListener('hashchange', readHash);
-  }, []);
+export function Sidebar({ currentSlug }: { currentSlug?: string }): JSX.Element {
+  const pathname = usePathname();
 
   return (
     <aside
       className="fixed left-0 top-0 z-20 hidden h-screen w-64 flex-col border-r border-slate-200 bg-slate-50 md:flex dark:border-slate-800 dark:bg-slate-900"
       aria-label="Navigazione"
     >
-      <div className="flex flex-1 flex-col px-4 py-6">
-        <div className="mb-8">
-          <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
+      <div className="flex flex-1 flex-col overflow-y-auto px-4 py-6">
+        <div className="mb-6">
+          <Link
+            href="/"
+            className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 hover:text-accent"
+          >
             Italy Economic Dashboard
-          </h2>
+          </Link>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Dati dal 2000</p>
         </div>
         <nav className="flex flex-col gap-1">
-          {NAV_ITEMS.map(({ id, label, icon }) => {
-            const isActive = activeId === id;
+          <Link
+            href="/"
+            className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+              pathname === '/'
+                ? 'bg-blue-50 text-accent dark:bg-blue-950/50 dark:text-accent-light'
+                : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+            }`}
+          >
+            <span className="flex h-5 w-5 items-center justify-center" aria-hidden>⌂</span>
+            Home
+          </Link>
+          {THEMES.map((theme) => {
+            const isActive = currentSlug === theme.slug || pathname === `/${theme.slug}`;
             return (
-              <a
-                key={id}
-                href={`#${id}`}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+              <Link
+                key={theme.slug}
+                href={`/${theme.slug}`}
+                className={`flex min-h-[44px] min-w-[44px] items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-blue-50 text-accent dark:bg-blue-950/50 dark:text-accent-light'
                     : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
                 }`}
               >
-                {icon}
-                {label}
-              </a>
+                {ICONS[theme.slug] ?? null}
+                {theme.label}
+              </Link>
             );
           })}
         </nav>
       </div>
-      <footer className="border-t border-slate-200 px-4 py-4 dark:border-slate-800">
+      <footer className="shrink-0 border-t border-slate-200 px-4 py-4 dark:border-slate-800">
         <p className="text-xs text-slate-500 dark:text-slate-400">© 2024 · ISTAT, Eurostat</p>
       </footer>
     </aside>

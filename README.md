@@ -1,110 +1,52 @@
 # Italy Economic Status Dashboard
 
-Dashboard di data journalism che racconta come è cambiata la condizione economica del cittadino medio italiano dal 2000 ad oggi. Ispirazione visiva: [Our World in Data](https://ourworldindata.org).
-
-**Non è un SaaS.** È un progetto portfolio, deployabile in modo statico su Vercel.
+Dashboard di data journalism sulla condizione economica del cittadino medio italiano dal 2000 ad oggi. Ispirazione: [Our World in Data](https://ourworldindata.org). **Progetto portfolio**, non SaaS; deploy statico su Vercel.
 
 ---
 
-## Descrizione
+## Cosa fa
 
-Il progetto presenta sei indicatori principali:
-
-1. **Reddito disponibile reale pro capite** — potere d’acquisto nel tempo  
-2. **Salari reali** — andamento dei salari deflazionati  
-3. **Inflazione** — indice dei prezzi al consumo (variazione % annua)  
-4. **Tasso di occupazione (15-64 anni)** — mercato del lavoro  
-5. **Consumi reali delle famiglie** — spesa e fiducia  
-6. **Rischio di povertà o esclusione sociale** — fragilità sociale  
-
-Per ogni indicatore sono evidenziati gli anni **2008**, **2012**, **2020** e **2022** come riferimenti alle crisi (finanziaria, debito sovrano, COVID-19, shock inflattivo).
+**6 indicatori**: Reddito reale pro capite, Salari reali, Inflazione, Occupazione 15-64, Consumi famiglie, Rischio povertà.  
+**Fonti**: ISTAT, Eurostat (dati via script da API SDMX, normalizzati in JSON).
 
 ---
 
-## Fonti dati
+## Comandi
 
-- **ISTAT** — Istituto Nazionale di Statistica  
-- **Eurostat** — Ufficio statistico dell’Unione europea  
+| Azione | Comando |
+|--------|--------|
+| Avvio locale | `npm install` → `npm run dev` → [localhost:3000](http://localhost:3000) |
+| Aggiornare dati | `npm run update-data` (scrive in `/data` e `/data/raw`) |
+| Build produzione | `npm run build` → output in `/out` |
 
-I dati sono acquisiti tramite script da API SDMX (ISTAT) e normalizzati in formato anno-valore.
-
----
-
-## Metodologia
-
-1. **Acquisizione**: lo script `scripts/updateData.ts` interroga endpoint ISTAT SDMX (configurabili).  
-2. **Normalizzazione**: le risposte vengono convertite nello schema `[{ "year": number, "value": number }]`.  
-3. **Versioning**: i file in `/data` e le risposte raw in `/data/raw` possono essere versionati su Git.  
-4. **Build**: Next.js esegue un export statico; nessuna chiamata API a runtime.  
+**Deploy Vercel**: collega il repo, Build command `npm run build`, Output directory `out`. Nessuna env obbligatoria.
 
 ---
 
-## Aggiornamento dati
+## Struttura
 
-Per aggiornare i dataset da fonti esterne:
+- **/app** — Next.js 14 App Router (layout, page, globals.css)
+- **/components** — Sidebar, MobileNav, NarrativeBlock, MetricCard; **/charts** — LineChart, ChartSection
+- **/data** — JSON normalizzati (income, wages, inflation, employment, consumption, poverty); **/data/raw** — risposte grezze API
+- **/lib** — types.ts, indicators.ts, themes.ts
+- **/scripts** — updateData.ts (sostituire URL con flussi SDMX reali)
 
-```bash
-npm run update-data
-```
-
-Lo script:
-
-- effettua le richieste agli endpoint configurati in `scripts/updateData.ts`;
-- salva le risposte grezze in `/data/raw`;
-- normalizza e scrive i file in `/data` (income, wages, inflation, employment, consumption, poverty).
-
-È necessario sostituire gli URL placeholder con i veri flussi SDMX ISTAT/Eurostat desiderati.
+**Stack**: Next.js 14, TypeScript strict, Tailwind, Recharts. Nessuna fetch a runtime; dati solo da file in `/data`. Dark mode supportato.
 
 ---
 
-## Esecuzione in locale
+## Dati
 
-```bash
-npm install
-npm run dev
-```
-
-Apri [http://localhost:3000](http://localhost:3000).
+Ogni file in `/data` è un array: `[{ "year": number, "value": number }]`. Anni interi, ordinati, nessun null. Range da 2000 in poi.
 
 ---
 
-## Build e deploy su Vercel
+## Design (sintesi)
 
-**Build statica:**
-
-```bash
-npm run build
-```
-
-L’output è in `/out`. Il progetto è pensato per **Vercel** (deploy automatico da Git).
-
-1. Collega il repository a Vercel.  
-2. Build command: `npm run build`.  
-3. Output directory: `out`.  
-4. Nessuna variabile d’ambiente obbligatoria per il funzionamento base.
-
----
-
-## Struttura del progetto
-
-```
-/app                 — App Router Next.js (layout, page, stili)
-/components          — Componenti UI riutilizzabili
-  /charts            — LineChart, ChartSection, HighlightedReferenceLines
-/data                — Dataset normalizzati (JSON)
-  /raw               — Risposte grezze API (salvate dallo script)
-/lib                 — Tipi TypeScript e metadati indicatori
-/scripts             — updateData.ts per aggiornamento dati
-/public              — Asset statici
-```
-
-- **TypeScript** in modalità strict, nessun `any`.  
-- **Tailwind CSS** per lo stile.  
-- **Recharts** per i grafici.  
-- **Nessuna fetch lato client**: i dati provengono solo dai file in `/data`.
+Layout: sidebar fissa a sinistra + contenuto a destra; MobileNav su mobile. Hero: *"Com'è cambiata la vita economica di un italiano dal 2000?"*. Per ogni indicatore: titolo narrativo, 2–4 righe, grafico. Font pulito (es. Inter), colori sobri, blu primario, responsive e dark mode.
 
 ---
 
 ## Licenza
 
-Progetto portfolio. Verificare le condizioni d’uso delle fonti ISTAT ed Eurostat per eventuali riusi dei dati.
+Progetto portfolio. Rispettare condizioni d’uso ISTAT/Eurostat per riuso dati.

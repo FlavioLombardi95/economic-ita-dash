@@ -1,5 +1,5 @@
 import { NarrativeBlock } from '@/components/NarrativeBlock';
-import { LineChart } from './LineChart';
+import { LineChart, type ChartVariant } from './LineChart';
 import type { DataPoint } from '@/lib/types';
 
 interface ChartSectionProps {
@@ -13,6 +13,10 @@ interface ChartSectionProps {
   takeaway?: string;
   /** Per grafici a indice (es. reddito, salari): anno base per legenda comprensibile */
   indexBaseYear?: number;
+  /** Tipo asse Y: index (100=2000), percent (%), inflation (variazione % anno su anno) */
+  chartVariant?: ChartVariant;
+  /** Linea orizzontale "punto di partenza" (es. 100 per indice, 0 per inflazione, valore 2000 per %) */
+  baselineValue?: number;
 }
 
 export function ChartSection({
@@ -24,9 +28,11 @@ export function ChartSection({
   color,
   takeaway,
   indexBaseYear,
+  chartVariant,
+  baselineValue,
 }: ChartSectionProps): JSX.Element {
   return (
-    <section id={id} className="scroll-mt-28 space-y-6 py-12 md:py-16">
+    <section id={id} className="scroll-mt-28 space-y-6 py-10 md:py-14">
       <NarrativeBlock title={title} takeaway={takeaway}>
         {description}
       </NarrativeBlock>
@@ -36,6 +42,8 @@ export function ChartSection({
           unit={unit}
           color={color}
           indexBaseYear={indexBaseYear}
+          chartVariant={chartVariant}
+          baselineValue={baselineValue}
         />
       </div>
     </section>

@@ -1,0 +1,18 @@
+---
+description: Regola per push Git con token da file
+alwaysApply: true
+---
+
+# Git Push con token
+
+Quando esegui **git push** su questo progetto:
+
+1. **Leggi sempre il token** dal file `.github-token` nella root del progetto (non è committato, è in .gitignore).
+2. **Usa il token per l’autenticazione** invece delle credenziali di sistema, per evitare errori 403.
+3. **Comando da usare**: dopo aver fatto `git add` e `git commit`, esegui il push con:
+   - Leggi il contenuto di `.github-token`
+   - Push con: `git push https://<TOKEN>@github.com/FlavioLombardi95/economic-ita-dash.git <branch>`
+   - dove `<TOKEN>` è il contenuto del file e `<branch>` è il branch corrente (es. `main`).
+4. **Non** includere mai il token in messaggi di commit, in file tracciati o in output di chat; usarlo solo per la chiamata a `git push`.
+
+Se ci sono modifiche da committare, fai prima stage e commit con un messaggio appropriato, poi push con il token come sopra.

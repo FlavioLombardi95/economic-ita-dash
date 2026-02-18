@@ -44,3 +44,7 @@ export const INDICATORS: IndicatorMeta[] = [
     takeaway: 'In pratica: dopo il 2012 le difficoltà sono aumentate molto; da qualche anno la situazione sta migliorando un po’.',
   },
 ];
+
+export function getIndicatorById(id: IndicatorMeta['id']): IndicatorMeta | undefined {
+  return INDICATORS.find((i) => i.id === id);
+}
